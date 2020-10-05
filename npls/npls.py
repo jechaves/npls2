@@ -43,11 +43,11 @@ def main(main_log_level, main_db_type):
 
     # Cria a classe de ligacao a base de dados
     log.debug(f'[+] A criar a classe db')
-    db = modules.db.Db(log_level, db_type, db_filename)
+    db = modules.database.db.Db(log_level, db_type, db_filename)
 
     # Cria a classe do decoder
     log.debug(f'[+] A criar a classe decoder')
-    decoder = modules.decoder.Decoder(log_level)
+    decoder = modules.decoder.decoder.Decoder(log_level)
 
     log.info(f'[+] A iniciar a captura de pacotes')
     # Depois de capturar o pacote envia-o para o packet_decode
