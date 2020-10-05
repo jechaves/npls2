@@ -72,12 +72,14 @@ class Db:
         # Configura o nivel de logging do modulo
         self.db_log_level()
 
-        # Chama a funcao que queria a base de dados selecionada
+        # Chama a funcao que cria a base de dados selecionada
         log.debug(f'[*] Base de dados: {self.db_type}')
         if self.db_type == 'csv':
             self.db_csv_create()
         elif self.db_type == 'sqlite':
             self.db_sqlite_create()
+        elif self.db_type == 'consola':
+            log.info(f'[+] A escrever para a consola')
         else:
             log.error(f'[!] Nao foi escolhida nenhuma dase de dados')
 
@@ -289,6 +291,34 @@ class Db:
                 self.db_conn.commit()
             except sqlite3.Error as e:
                 log.error(f'[!] Ocureu o erro {e} a inserir o pacote na base de dados')
+
+        elif self.db_type == 'consola':
+            print(f'{str(db_packet_dic.get("packet_number"))},'
+                  f'{str(db_packet_dic.get("time_stamp"))},'
+                  f'{str(db_packet_dic.get("l3_layer"))},'
+                  f'{str(db_packet_dic.get("ip_version"))},'
+                  f'{str(db_packet_dic.get("ip_len"))},'
+                  f'{str(db_packet_dic.get("ip_flags"))},'
+                  f'{str(db_packet_dic.get("ip_frag"))},'
+                  f'{str(db_packet_dic.get("ip_proto"))},'
+                  f'{str(db_packet_dic.get("ip_src"))},'
+                  f'{str(db_packet_dic.get("ip_address_type_src"))},'
+                  f'{str(db_packet_dic.get("ip_geolocalizacao_src_pais"))},'
+                  f'{str(db_packet_dic.get("ip_geolocalizacao_src_pais_iso"))},'
+                  f'{str(db_packet_dic.get("ip_geolocalizacao_src_cidade"))},'
+                  f'{str(db_packet_dic.get("ip_dst"))},'
+                  f'{str(db_packet_dic.get("ip_address_type_dst"))},'
+                  f'{str(db_packet_dic.get("ip_geolocalizacao_dst_pais"))},'
+                  f'{str(db_packet_dic.get("ip_geolocalizacao_dst_pais_iso"))},'
+                  f'{str(db_packet_dic.get("ip_geolocalizacao_dst_cidade"))},'
+                  f'{str(db_packet_dic.get("l4_layer"))},'
+                  f'{str(db_packet_dic.get("l4_sport"))},'
+                  f'{str(db_packet_dic.get("l4_sport_name"))},'
+                  f'{str(db_packet_dic.get("l4_dport"))},'
+                  f'{str(db_packet_dic.get("l4_dport_name"))},'
+                  f'{str(db_packet_dic.get("tcp_flags"))}'
+                  f'\n'
+                  )
 
         else:
             log.error(f'[!] Base de dados desconhecida')

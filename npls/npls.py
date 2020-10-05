@@ -119,7 +119,8 @@ if __name__ == '__main__':
     # Adiciona os argumentos
     # Todo: Adicionar opcoes, por exemplo tcp, udp ou arp
     parser.add_argument('-l', '--logging', help='Nivel de logging, critical, error, warning (default), info, debug')
-    parser.add_argument("-d", "--database", help="Escolha da base de dados: sqlite (default) ou csv.")
+    parser.add_argument('-d', '--database', help='Escolha da base de dados: sqlite (default), csv ou consola.')
+    parser.add_argument('-f', '--filter', help='Escolha o filtro o default e IP e TCP ou UDP')
 
     # Executa o parser
     args = parser.parse_args()
@@ -176,5 +177,12 @@ if __name__ == '__main__':
             close()
     else:
         log.info(f'[+] A usar base de dados padrao, {db_type}')
+
+    # Verificação dos argumentos para o filtro de captura
+    if args.filter:
+        log.info(f'[+] Foi passado como filtro -> {args.filter}')
+        # Coloca as opções em minusculas
+        db_type = args.database.lower()
+        packet_filter = args.filter
 
     main(log_level, db_type)
