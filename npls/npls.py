@@ -27,6 +27,8 @@ packet_filter = 'ip and (tcp or udp)'
 decoder = None
 db = None
 
+interface = "Intel(R) Dual Band Wireless-AC 8260"
+
 # Configuração inicial do logging
 log = logging.getLogger(__name__)
 
@@ -51,7 +53,7 @@ def main(log_level, db_type):
 
     log.info(f'[+] A iniciar a captura de pacotes')
     # Depois de capturar o pacote envia-o para o packet_decode
-    sniff(prn=packet_decoder, filter=packet_filter)
+    sniff(prn=packet_decoder, filter=packet_filter,  iface=interface)
 
 
 def packet_decoder(packet):
