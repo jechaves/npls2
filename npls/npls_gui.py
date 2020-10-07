@@ -12,6 +12,7 @@ import argparse
 import sys
 import platform
 import datetime
+from gooey import Gooey, GooeyParser
 
 # Import dos modulos
 import modules
@@ -93,6 +94,24 @@ def close(*connection):
         sys.exit()
 
 
+@Gooey(program_name="Network Packet Logging System")
+def parse_args():
+    # Cria o objeto parser
+    # parser = argparse.ArgumentParser()
+    parser = GooeyParser()
+
+    # Adiciona os argumentos
+    # Todo: Adicionar opcoes, por exemplo tcp, udp ou arp
+    parser.add_argument('--logging', help='Nivel de logging, critical, error, warning (default), info, debug', choices=['critical', 'error', 'warning', 'info', 'debug'], default='warning')
+    parser.add_argument('--database', help='Escolha da base de dados: sqlite (default), csv ou consola.', choices=['sqlite', 'csv', 'consola'], default='sqlite')
+    parser.add_argument('--filter', help='Escolha o filtro o default e IP e TCP ou UDP', default=packet_filter)
+
+
+    # Executa o parser
+    # args = parser.parse_args()
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
     """
        Esta rotina não é chamada se estiver a correr como modulo
@@ -113,17 +132,18 @@ if __name__ == '__main__':
     print(f'==================== NPLS Start ====================')
     log.info(f'[+] Systema de logging iniciado')
 
-    # Cria o objeto parser
-    parser = argparse.ArgumentParser()
-
-    # Adiciona os argumentos
-    # Todo: Adicionar opcoes, por exemplo tcp, udp ou arp
-    parser.add_argument('-l', '--logging', help='Nivel de logging, critical, error, warning (default), info, debug')
-    parser.add_argument('-d', '--database', help='Escolha da base de dados: sqlite (default), csv ou consola.')
-    parser.add_argument('-f', '--filter', help='Escolha o filtro o default e IP e TCP ou UDP')
-
-    # Executa o parser
-    args = parser.parse_args()
+    args = parse_args()
+    # # Cria o objeto parser
+    # parser = argparse.ArgumentParser()
+    #
+    # # Adiciona os argumentos
+    # # Todo: Adicionar opcoes, por exemplo tcp, udp ou arp
+    # parser.add_argument('-l', '--logging', help='Nivel de logging, critical, error, warning (default), info, debug')
+    # parser.add_argument('-d', '--database', help='Escolha da base de dados: sqlite (default), csv ou consola.')
+    # parser.add_argument('-f', '--filter', help='Escolha o filtro o default e IP e TCP ou UDP')
+    #
+    # # Executa o parser
+    # args = parser.parse_args()
 
     # Verificação dos argumentos de logging
     if args.logging:
