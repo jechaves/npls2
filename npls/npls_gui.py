@@ -202,7 +202,7 @@ if __name__ == '__main__':
     if args.filter:
         log.info(f'[+] Foi passado como filtro -> {args.filter}')
         # Coloca as opções em minusculas
-        db_type = args.database.lower()
+        # db_type = args.database.lower()
         packet_filter = args.filter
 
     main(log_level, db_type)
